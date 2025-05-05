@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Páginas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .progress {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actualizar Páginas</h1>
+    <p>Este proceso actualizará todas las páginas con la plantilla base y el carrito de compras.</p>
+    <div id="status"></div>
+    <button onclick="startUpdate()">Iniciar Actualización</button>
+
+    <script src="js/update_pages.js"></script>
+    <script>
+        function startUpdate() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '<div class="status progress">Iniciando actualización...</div>';
+            
+            // Ejecutar el script de actualización
+            const pages = [
+                'it_home.html',
+                'it_about.html',
+                'it_service.html',
+                'it_service_list.html',
+                'it_service_detail.html',
+                'it_blog.html',
+                'it_blog_grid.html',
+                'it_blog_detail.html',
+                'it_career.html',
+                'it_price.html',
+                'it_faq.html',
+                'it_privacy_policy.html',
+                'it_error.html',
+                'it_contact.html',
+                'it_contact_2.html',
+                'it_shop.html',
+                'it_shop_detail.html',
+                'it_cart.html',
+                'it_checkout.html',
+                'it_computer_repair.html',
+                'it_data_recovery.html',
+                'it_mobile_service.html',
+                'it_network_solution.html',
+                'it_techn_support.html',
+                'it_term_condition.html',
+                'it_news.html',
+                'make_appointment.html'
+            ];
+
+            let completed = 0;
+            pages.forEach(page => {
+                updatePage(page)
+                    .then(() => {
+                        completed++;
+                        statusDiv.innerHTML += `<div class="status success">${page} actualizada correctamente (${completed}/${pages.length})</div>`;
+                        if (completed === pages.length) {
+                            statusDiv.innerHTML += '<div class="status success">¡Todas las páginas han sido actualizadas!</div>';
+                        }
+                    })
+                    .catch(error => {
+                        statusDiv.innerHTML += `<div class="status error">Error al actualizar ${page}: ${error.message}</div>`;
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 
